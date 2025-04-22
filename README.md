@@ -6,8 +6,8 @@
  <li>Password : "123456789"</li>
 
 <h2>Homepage</h2>
-!(https://github.com/user-attachments/assets/38904974-7128-4bd9-9930-18334faeb204)
-!(https://github.com/user-attachments/assets/e8512b33-9091-4da7-8744-fe58eac7eff2)
+<img src = " https://github.com/user-attachments/assets/38904974-7128-4bd9-9930-18334faeb204 "> </br>
+(https://github.com/user-attachments/assets/e8512b33-9091-4da7-8744-fe58eac7eff2)
 
 <h2>List Page</h2>
 <img src = "/dem_img/2.PNG">
