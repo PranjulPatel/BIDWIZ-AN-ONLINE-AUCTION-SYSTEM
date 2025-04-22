@@ -6,7 +6,9 @@
  <li>Password : "123456789"</li>
 
 <h2>Homepage</h2>
-<img src="C:\Users\pranj\OneDrive\Pictures\Screenshots\Screenshot 2025-04-22 083511.png">
+![Screenshot 2025-04-22 083522](https://github.com/user-attachments/assets/38904974-7128-4bd9-9930-18334faeb204)
+![Screenshot 2025-04-22 083511](https://github.com/user-attachments/assets/e8512b33-9091-4da7-8744-fe58eac7eff2)
+
 <h2>List Page</h2>
 <img src = "/dem_img/2.PNG">
   
