@@ -21,9 +21,48 @@
         <p class="desc">{{ list.desc }}</p>
         <a><a class="c_price">Starting Bid: </a> {{ list.starting_bid }} $ </a>
         <a href="{% url 'listingpage' list.id %}">View Bid</a>
+
+        <!-- Timer Section -->
+        <div class="timer" id="timer-{{ list.id }}" data-deadline="{{ list.deadline|date:'Y-m-d H:i:s' }}" style="margin-top: 10px; font-weight: bold; color: red;">
+           Loading timer...
+        </div>
+  
     </div>  
     {% endfor %}
     </div>
+
+    <script>
+        // Timer script
+        document.addEventListener('DOMContentLoaded', function() {
+          const timers = document.querySelectorAll('[id^="timer-"]');
+        
+          timers.forEach(timer => {
+            const deadlineStr = timer.getAttribute('data-deadline');
+            const deadline = new Date(deadlineStr).getTime();
+        
+            const updateTimer = () => {
+              const now = new Date().getTime();
+              const distance = deadline - now;
+        
+              if (distance < 0) {
+                timer.textContent = "Auction Ended!";
+                return;
+              }
+        
+              const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+              const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+              timer.textContent = `${hours}h ${minutes}m ${seconds}s`;
+              setTimeout(updateTimer, 1000);
+            };
+        
+            updateTimer();
+          });
+        });
+        </script>
+        
+        
       
 <style>
 p{

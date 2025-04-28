@@ -6,6 +6,17 @@ from django.urls import reverse
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils import timezone
+from .models import auctionlist
+
+
+def active_auctions(request):
+    active_items = auctionlist.objects.filter(end_time__gt=timezone.now(), active_bool=True)
+    return render(request, "layout.html", {"auctions": active_items})
+
+def expired_auctions(request):
+    expired_items = auctionlist.objects.filter(end_time__lte=timezone.now())
+    return render(request, "layout.html", {"auctions": expired_items})
 
 
 def index(request):    
