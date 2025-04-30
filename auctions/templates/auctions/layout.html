@@ -5,82 +5,93 @@
   <head>
     <meta charset="UTF-8" />
     <title>{% block title %}BIDWIZ{% endblock %}</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous"/>
     <link rel="stylesheet" href="{% static 'auctions/styles.css' %}" />
-
-    <link
-      rel="icon"
-      type="image/png"
-      href="{% static 'auctions/bidwizlogo.png' %}"
-    />
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="icon" type="image/png" href="{% static 'auctions/bidwizlogo.png' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet" />
+    <style>
+      .navbar-custom {
+        background: linear-gradient(135deg, #1e3c72, #2a5298, #9c27b0, #ff4081);
+        padding: 10px 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: 'Nunito', sans-serif;
+      }
+      @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .navbar-logo {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+      }
+      .nav-link {
+        color: #000;
+        font-weight: 600;
+        margin: 0 10px;
+      }
+      .nav-link:hover {
+        color: rgb(9, 24, 241);
+      }
+      .glass-box {
+        background: rgba(188, 128, 128, 0.39);
+        padding: 10px;
+        margin: 10px 0;
+        text-align: center;
+        font-weight: bold;
+        font-family: 'Nunito', sans-serif;
+      }
+    </style>
   </head>
   <body>
 
-    <div class="container-fluid text-center my-4">
-      <img
-        src="{% static 'auctions/bidwizlogo.png' %}"
-        alt="BidWiz Logo"
-        class="logo-img"
-      />
-      <h1 class="animated-heading mt-3">
-        BidWiz: Redefining Auctions, Revolutionizing Bids
-      </h1>
-    
-    </div>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'auctions/bidwizlogo.png' %}" alt="BidWiz Logo" class="navbar-logo">
+      </a>
+      <div class="ml-auto d-flex align-items-center">
+        <ul class="navbar-nav flex-row">
+          <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Active Listings</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'cat_list' %}">Categories</a></li>
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'create' %}">Create</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'watchlistpage' user.username %}">Watchlist</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'winnings' %}">Winnings</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
 
-
-    <div class="glass-box mb-3">
-    {% if user.is_authenticated %} Signed in as
-      <strong>{{ user.username }}</strong>.{% else %}Not
-      signed in.{% endif %}
-    </div>
-
-
-    <ul class="nav nav-pills nav-fill mb-4">
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'cat_list' %}">Categories</a>
-      </li>
+    <div class="glass-box">
       {% if user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'watchlistpage' user.username %}"
-          >Watch List</a
-        >
-      </li>
-    
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'winnings' %}">Your Winnings</a>
-      </li>
+        Signed in as <strong>{{ user.username }}</strong>.
       {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-      </li>
-    
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'register' %}">Register</a>
-      </li>
+        Not signed in.
       {% endif %}
-    </ul>
-
+    </div>
 
     <div class="container">
-      {% block body %} {% endblock %}
+      {% block body %}{% endblock %}
     </div>
+
+    <!-- Dark Mode Toggle Button -->
+    <button class="dark-toggle" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+    <script>
+      function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+      }
+      window.onload = () => {
+        if (localStorage.getItem('darkMode') === 'true') {
+          document.body.classList.add('dark-mode');
+        }
+      }
+    </script>
   </body>
 </html>

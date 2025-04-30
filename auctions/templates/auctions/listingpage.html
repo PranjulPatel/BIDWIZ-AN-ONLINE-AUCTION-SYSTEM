@@ -1,134 +1,67 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <a class="title">{{list.title}}</a><br>
-        <a class= "cat">{{list.category}}</a>
-        {% if messages %}
+<div class="container my-4" style="font-family: 'Nunito', sans-serif;">
+    <h2 class="text-center mb-3">{{ list.title }}</h2>
+    <h5 class="text-center text-muted mb-4">Category: {{ list.category }}</h5>
+
+    {% if messages %}
         {% for message in messages %}
-            <div class="message">{{ message }}</div>
+            <div class="alert alert-info text-center">{{ message }}</div>
         {% endfor %}
-        {% endif %}
-    <div id="activelist">
-        <div id = "productinfo">
-        {% if list.image_url %}
-            <img src="{{ list.image_url }}" class="list_img">
-        {% else %}
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" alt="No image Provided" class="list_img">
-        {% endif %}
+    {% endif %}
 
-        <p class="desc">{{ list.desc }}</p>
-        <div class = "start_bid"><a><a class="c_price">Present Bid: </a> {{ present_bid}} $ </div>
-        <div class = "start_bid"><a><a class="c_price">Listed By: </a> {{ list.user }}</div>
-        
+    <div class="row">
+        <div class="col-md-8">
+            {% if list.image_url %}
+                <img src="{{ list.image_url }}" class="img-fluid rounded mb-3">
+            {% else %}
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" class="img-fluid rounded mb-3">
+            {% endif %}
 
-        <form method="get" action = "{% url 'bid' %}">
-        <input name= "bid_amnt" placeholder = "Bid Amount" type = "number">
-        <button class="btn btn-outline-primary" type = "submit" name = "list_d" value = {{ list.id }}>Bid Item</button>
-        </form>
-        <div class="bid_amnt">
-        <form method= "get" action = "{% url 'addwatchlist' %}">
-        <button class="btn btn-outline-primary" type = "submit" value = {{ list.id }} name = "listid" >Add to Watchlist</button>
-        </form>
-        </div>
-        </div>
+            <p class="lead">{{ list.desc }}</p>
+            <p><strong>Present Bid:</strong> {{ present_bid }} $</p>
+            <p><strong>Listed By:</strong> {{ list.user }}</p>
 
+            <form method="get" action="{% url 'bid' %}" class="mb-3">
+                <div class="input-group">
+                    <input name="bid_amnt" placeholder="Bid Amount" type="number" class="form-control">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit" name="list_d" value="{{ list.id }}" style="color:black;">Bid Item</button>
+                    </div>
+                </div>
+            </form>
 
-        <div id="commentsection">
-        <h3>Comments</h3>
-        <div id="commentbox">
-            <ul>
-            {% for comment in comments %}
-            <li><a class="comment"><a>{{ comment.user }} : {{comment.comment}}</a></li>
-            {% endfor %}
-            </ul>
+            <form method="get" action="{% url 'addwatchlist' %}" class="mb-4">
+                <button class="btn btn-outline-secondary w-100" type="submit" value="{{ list.id }}" name="listid" style="color:black;">Add to Watchlist</button>
+            </form>
         </div>
 
-        <form method = "get" action ="{% url 'allcomments' %}">
-        <input required type = "text" placeholder = "Add Comment" name = "comment">
-        <button class="btn btn-outline-primary" type = "submit" value = {{ list.id }} name = "listid"> Comment </button>
-        </form>
-        <div class= "closebid">
-        {% if list.user == user.username %}
-        <form method= "get" action = "{% url 'win_ner' %}">
-        <button class="btn btn-outline-primary" type = "submit" value = {{ list.id }} name = "listid" >Close Bid</button>
-        </form>
-        {% endif %}
+        <div class="col-md-4">
+            <div class="card p-3 bg-light">
+                <h4 class="mb-3">Comments</h4>
+                <div class="mb-3" style="max-height: 300px; overflow-y: auto;">
+                    <ul class="list-unstyled">
+                        {% for comment in comments %}
+                        <li><strong>{{ comment.user }}</strong>: {{ comment.comment }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <form method="get" action="{% url 'allcomments' %}" class="mb-2">
+                    <div class="input-group">
+                        <input required type="text" class="form-control" placeholder="Add Comment" name="comment">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit" value="{{ list.id }}" name="listid">Comment</button>
+                        </div>
+                    </div>
+                </form>
+                {% if list.user == user.username %}
+                <form method="get" action="{% url 'win_ner' %}">
+                    <button class="btn btn-danger w-100" type="submit" value="{{ list.id }}" name="listid">Close Bid</button>
+                </form>
+                {% endif %}
+            </div>
         </div>
-        </div>
-
-
     </div>
-    
-
-<style>
-
-.closebid{
-    padding: 1vw;
-}
-
-#activelist{
-    margin-top: 2vw;
-    grid-gap: 2vw;
-    display:grid;
-    width: 80%;
-    margin-left: 10%;
-    grid-template-rows: repeat(auto,1fr);
-    grid-template-columns: 1fr 0.5fr;
-    font-family: 'Nunito', sans-serif;
-}
-p{
-    margin-top: 1vw;
-}
-#commentsection{
-    
-    background-color: #F5F5F5;
-
-}
-
-.bid_amnt{
-    padding: 1vw;
-}
-
-h3{
-    padding-top: 2vw;
-}
-
-#commentbox{
-text-align: left;
-padding-top: 1vw;
-background-color: white;
-min-height: 300px;
-margin: 1vw;
-
-}
-
-img{
-        width: 100%;
-      
-    }
-
-.title{
-
-    font-size: 2vw;
-    font-weight: bold;
-
-}
-.c_price{
-    
-    font-weight: bold;
-
-}
-
-.comment{
-   align-items : left;
-}
-
-.start_bid{
-
-    padding-bottom: 1vw;
-
-}
-</style>
+</div>
 {% endblock %}
-
-

@@ -1,45 +1,31 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2 style = "font-weight: bold;text-align: center; font-family: Nunito;">Create Listing</h2>
-    <div id="activelist">
-    <form method="POST">
-        {% csrf_token %}
-        <input required placeholder="Title" autofocus type="text" name="create_title"/>
-        <textarea placeholder="Add Description" required type="text" name="create_desc"></textarea>
-        <input required placeholder="Starting bid" type="number" name="create_initial_bid"/>
-        <input placeholder="Image URL (optional)" type="text" name="img_url"/>
-        <input required placeholder="Category" type="text" name="category"/>
-        <button class="btn btn-outline-primary" type="submit">Submit</button>
-    </form>    
+<div class="container my-5" style="font-family: 'Nunito', sans-serif;">
+    <div class="card shadow p-5 mx-auto" style="max-width: 700px; border-radius: 20px;">
+        <h2 class="text-center mb-4" style="font-weight: bold;">Create New Listing</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                <input required placeholder="Title" autofocus type="text" name="create_title" class="form-control"/>
+            </div>
+            <div class="form-group mb-3">
+                <textarea placeholder="Add Description" required name="create_desc" class="form-control" rows="5"></textarea>
+            </div>
+            <div class="form-group mb-3">
+                <input required placeholder="Starting Bid ($)" type="number" name="create_initial_bid" class="form-control"/>
+            </div>
+            <div class="form-group mb-3">
+                <input placeholder="Image URL (optional)" type="text" name="img_url" class="form-control"/>
+            </div>
+            <div class="form-group mb-4">
+                <input required placeholder="Category" type="text" name="category" class="form-control"/>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </form>
     </div>
-      
-<style>
-        
-#activelist{
-    width: 60%;
-    margin-left:20%;
-    
-}
-textarea{
-    height: 10vw;
-}
-form{
-    padding-top: 2vw;
-    display:grid;
-    grid-template-rows: repeat(auto,1fr);
-    grid-template-columns: 1fr;
-    grid-gap: 2vw;
-    font-family: 'Nunito', sans-serif;
-    }
-
-.btn{
-
-    font-family: Nunito;
-    width: 30%;
-    margin-left: 70%;
-}
-</style>
+</div>
 {% endblock %}
-
-

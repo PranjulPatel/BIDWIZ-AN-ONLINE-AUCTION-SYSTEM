@@ -1,110 +1,62 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+<div class="container" style="font-family: 'Nunito', sans-serif;">
+    <h2 class="text-center my-4" style="color:black;">Active Listings</h2>
     {% if messages %}
-    {% for message in messages %}
-    <div class="message">{{ message }}</div>
-    {% endfor %}
+        {% for message in messages %}
+            <div class="alert alert-info text-center">{{ message }}</div>
+        {% endfor %}
     {% endif %}
-    <div id="activelist">
-    {% for list in a1 %}
-    <div class = "card">
-        <a class="title">{{list.title}}</a>
-        <a class= "cat">{{list.category}}</a>
-        {% if list.image_url %}
-            <img src="{{ list.image_url }}" class="list_img">
-        {% else %}
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" alt="No image Provided" class="list_img">
-        {% endif %}
 
-        <p class="desc">{{ list.desc }}</p>
-        <a><a class="c_price">Starting Bid: </a> {{ list.starting_bid }} $ </a>
-        <a href="{% url 'listingpage' list.id %}">View Bid</a>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for list in a1 %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                {% if list.image_url %}
+                    <img src="{{ list.image_url }}" class="card-img-top" alt="Listing Image">
+                {% else %}
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" class="card-img-top" alt="No image Provided">
+                {% endif %}
 
-        <!-- Timer Section -->
-        <div class="timer" id="timer-{{ list.id }}" data-deadline="{{ list.deadline|date:'Y-m-d H:i:s' }}" style="margin-top: 10px; font-weight: bold; color: red;">
-           Loading timer...
+                <div class="card-body">
+                    <h5 class="card-title">{{ list.title }}</h5>
+                    <h6 class="text-muted">Category: {{ list.category }}</h6>
+                    <p class="card-text">{{ list.desc }}</p>
+                    <p><strong>Starting Bid:</strong> {{ list.starting_bid }} $</p>
+                    <a href="{% url 'listingpage' list.id %}" class="btn btn-outline-primary btn-sm">View Bid</a>
+                    <div class="mt-2 timer text-danger font-weight-bold" id="timer-{{ list.id }}" data-deadline="{{ list.deadline|date:'Y-m-d H:i:s' }}">
+                        Loading timer...
+                    </div>
+                </div>
+            </div>
         </div>
-  
-    </div>  
-    {% endfor %}
+        {% endfor %}
     </div>
+</div>
 
-    <script>
-        // Timer script
-        document.addEventListener('DOMContentLoaded', function() {
-          const timers = document.querySelectorAll('[id^="timer-"]');
-        
-          timers.forEach(timer => {
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const timers = document.querySelectorAll('[id^="timer-"]');
+        timers.forEach(timer => {
             const deadlineStr = timer.getAttribute('data-deadline');
             const deadline = new Date(deadlineStr).getTime();
-        
+
             const updateTimer = () => {
-              const now = new Date().getTime();
-              const distance = deadline - now;
-        
-              if (distance < 0) {
-                timer.textContent = "Auction Ended!";
-                return;
-              }
-        
-              const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-              const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-              const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-              timer.textContent = `${hours}h ${minutes}m ${seconds}s`;
-              setTimeout(updateTimer, 1000);
+                const now = new Date().getTime();
+                const distance = deadline - now;
+                if (distance < 0) {
+                    timer.textContent = "Auction Ended!";
+                    return;
+                }
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                timer.textContent = `${hours}h ${minutes}m ${seconds}s`;
+                setTimeout(updateTimer, 1000);
             };
-        
             updateTimer();
-          });
         });
-        </script>
-        
-        
-      
-<style>
-p{
-    padding: 1vw;
-}
-#activelist{
-    margin-top: 4vw;
-    grid-gap: 2vw;
-    display:grid;
-    width: 90%;
-    margin-left: 5%;
-    grid-template-rows: repeat(auto,1fr);
-    grid-template-columns: 1fr 1fr 1fr;
-    font-family: 'Nunito', sans-serif;
-    text-align: center;
-}
-.card{
-    display: grid;
-    grid-template-rows: repeat(auto,1fr);
-    grid-template-columns: 1fr;
-    width: 90%;
-    margin-left: 5%;
-}
-
-img{
-        width: 100%;
-    }
-
-.title{
-
-    font-size: 2vw;
-    font-weight: bold;
-}
-.c_price{
-    font-weight: bold;
-}
-
-
-</style>
-
-
-
+    });
+</script>
 {% endblock %}
-
-

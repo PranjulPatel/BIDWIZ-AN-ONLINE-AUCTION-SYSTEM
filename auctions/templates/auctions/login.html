@@ -1,24 +1,53 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+<div class="d-flex justify-content-center align-items-center" style="height: 80vh; background: linear-gradient(135deg,rgb(56, 126, 197,0.2),rgb(104, 157, 213,0.2)); font-family: 'Nunito', sans-serif;">
+    <div class="card shadow p-5" style="width: 100%; max-width: 400px; border-radius: 20px;">
+        <h2 class="text-center mb-4" style="font-weight: bold;">Login to BidWiz</h2>
 
-    <h2>Login</h2>
+        {% if message %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
 
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="username">Username</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                    <input id="username" autofocus class="form-control" type="text" name="username" placeholder="Username">
+                </div>
+            </div>
 
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+            <div class="form-group mb-4">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                    <input id="password" class="form-control" type="password" name="password" placeholder="Password">
+                </div>
+            </div>
+
+            <div class="d-grid">
+                <input class="btn btn-primary w-100" type="submit" value="Login">
+            </div>
+        </form>
+
+        <div class="text-center mt-3">
+            <small>Don't have an account? <a href="{% url 'register' %}">Register here.</a></small>
         </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
-        </div>
-        <input class="btn btn-primary" type="submit" value="Login">
-    </form>
+    </div>
+</div>
 
-    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
-
+<!-- Add Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 {% endblock %}
