@@ -7,7 +7,12 @@ body {
 }
 
 body.dark-mode {
-  background: #0a0f24;
+  background: black;
+  color: #e0e0e0;
+}
+
+.navbar.dark-mode{
+  background: black;
   color: #e0e0e0;
 }
 
@@ -16,10 +21,14 @@ h2, h3, h4, h5 {
   color: #ffffff;
 }
 
+.text-muted{
+  color:darkgrey !important;
+}
+
 /* Card Styles - Glass Effect */
 .card {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 3px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 15px;

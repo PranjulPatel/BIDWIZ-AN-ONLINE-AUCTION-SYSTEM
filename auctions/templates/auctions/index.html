@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container" style="font-family: 'Nunito', sans-serif;">
-    <h2 class="text-center my-4" style="color:grey;">Active Listings</h2>
+    <h2 class="text-center my-4 text-light">Active Listings</h2>
     {% if messages %}
         {% for message in messages %}
             <div class="alert alert-info text-center">{{ message }}</div>
@@ -14,9 +14,9 @@
         <div class="col">
             <div class="card h-100 shadow-sm">
                 {% if list.image_url %}
-                    <img src="{{ list.image_url }}" class="card-img-top" alt="Listing Image">
+                    <img src="{{ list.image_url }}" class="card-img-top list_img" alt="Listing Image">
                 {% else %}
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" class="card-img-top" alt="No image Provided">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" class="card-img-top list_img" alt="No image Provided">
                 {% endif %}
 
                 <div class="card-body">

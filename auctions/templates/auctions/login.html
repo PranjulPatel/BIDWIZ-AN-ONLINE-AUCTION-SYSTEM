@@ -1,9 +1,9 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div class="d-flex justify-content-center align-items-center" style="height: 80vh; background: linear-gradient(135deg,rgb(56, 126, 197,0.2),rgb(104, 157, 213,0.2)); font-family: 'Nunito', sans-serif;">
-    <div class="card shadow p-5" style="width: 100%; max-width: 400px; border-radius: 20px;">
-        <h2 class="text-center mb-4" style="font-weight: bold;">Login to BidWiz</h2>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh; font-family: 'Nunito', sans-serif;">
+    <div class="card shadow p-5 w-100" style="max-width: 400px; border-radius: 20px;">
+        <h2 class="text-center mb-4 font-weight-bold">Login to BidWiz</h2>
 
         {% if message %}
             <div class="alert alert-danger" role="alert">
@@ -17,11 +17,9 @@
                 <label for="username">Username</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="fas fa-user"></i>
-                        </span>
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input id="username" autofocus class="form-control" type="text" name="username" placeholder="Username">
+                    <input id="username" class="form-control" type="text" name="username" placeholder="Enter username" required autofocus>
                 </div>
             </div>
 
@@ -29,17 +27,13 @@
                 <label for="password">Password</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="fas fa-lock"></i>
-                        </span>
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
                     </div>
-                    <input id="password" class="form-control" type="password" name="password" placeholder="Password">
+                    <input id="password" class="form-control" type="password" name="password" placeholder="Enter password" required>
                 </div>
             </div>
 
-            <div class="d-grid">
-                <input class="btn btn-primary w-100" type="submit" value="Login">
-            </div>
+            <button class="btn btn-primary btn-block" type="submit">Login</button>
         </form>
 
         <div class="text-center mt-3">
@@ -47,7 +41,5 @@
         </div>
     </div>
 </div>
-
-<!-- Add Font Awesome for icons -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 {% endblock %}
