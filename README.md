@@ -1,5 +1,13 @@
 # Auctions-Django
 <h3>BidWiz is a robust, full-stack auction platform designed to handle real-time bidding with a focus on database efficiency and secure user transactions.</h3>
+
+ <h2>🛠️ Tech Stack</h2>
+ <li>
+  <ul>Backend: Python, Django  </ul>
+  <ul>Frontend: JavaScript, HTML5, CSS3 </ul> 
+  <ul>Database: MySQL  </ul>
+  <ul>Tools: Git, VS Code</ul>
+ </li>
  
  <h2>Django Admin Credentials:</h2>
  <li>UserID : "pranjul-admin"</li>
